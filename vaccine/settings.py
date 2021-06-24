@@ -21,7 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config('SECRET_KEY')
+SECRET_KEY = '%tf^_dbj5785c4gz+dok34@5b6@xj#4^oybh(n7x9u#52nm4x+'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -128,7 +128,7 @@ USE_L10N = True
 USE_TZ = True
 
 FCM_DJANGO_SETTINGS = {
-    "FCM_SERVER_KEY": config('FCM_SERVER_KEY')
+    "FCM_SERVER_KEY": 'AAAA9f13vs8:APA91bEM7W7z8roCxYUizgKQZDhHx05umspYoQvmN_AcTVP8C2i4NB8TFkKFijGXFm7lxArzQ3zaXI48uLc1T6YhNM9QGuJkBAzhpkEfpwPuC3c1rKmOGmML9Kn3bygO2UhFNnFB_rhf'
 }
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
