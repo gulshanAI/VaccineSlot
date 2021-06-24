@@ -1,0 +1,38 @@
+from django.shortcuts import render
+from django.http import HttpResponse
+from .Vaccine import Vaccine
+from .models import VaccineRegisteraton, Notification
+from django.utils.timezone import datetime
+from django.db.models import Q
+from django.core.exceptions import ObjectDoesNotExist
+
+def vaccineApi(request):
+    regUser = VaccineRegisteraton.objects.all()
+    if regUser:
+        today = datetime.today().strftime('%d-%m-%Y')
+        for reg in regUser:
+            try:
+                noti = Notification.objects.get(Q(registerUser=reg) & Q(ofDate=today) & Q(noti=True))
+            except ObjectDoesNotExist:
+                vac = Vaccine(today, reg)
+                vac.getVaccineDetail()
+                return HttpResponse("finding..")
+    return HttpResponse("hello..")
+
+def viewNoti(request):
+    return render(request, "viewNoti.html", context={})
+    
+
+from rest_framework.response import Response
+from .models import VaccineRegisteraton
+from .serializers import VaccineRegisteratonSerializer
+from rest_framework import status
+from rest_framework import viewsets
+
+class RegisterForVaccine(viewsets.ViewSet):
+    def create(self, request):
+        serializer = VaccineRegisteratonSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({'msg':'Data Created'}, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
