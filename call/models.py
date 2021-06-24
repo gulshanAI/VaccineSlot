@@ -28,6 +28,7 @@ class VaccineRegisteraton(models.Model):
             defaults={
                 'name': self.name,
                 'registration_id': self.token,
+                'type': "web",
             },
         )
 
