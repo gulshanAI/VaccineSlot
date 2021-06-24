@@ -11,13 +11,9 @@ def vaccineApi(request):
         for reg in regUser:
             vac = Vaccine(today, reg)
             vac.getVaccineDetail()
-            return HttpResponse("finding..")
-    return HttpResponse("hello..")
+            return HttpResponse("finding.. for "+str(today))
+    return HttpResponse("No Registeration")
 
-
-def getDate(request):
-    today = datetime.today().strftime('%d-%m-%Y')
-    return HttpResponse(today)
 
 from rest_framework.response import Response
 from .models import VaccineRegisteraton
