@@ -10,5 +10,7 @@ router.register('', views.RegisterForVaccine, basename='RegisterForVaccine')
 
 urlpatterns = [
     path('', views.vaccineApi),
+    path('viewNotification', views.noti),
+    path('noti', views.noti),
     path('registerForVaccine', include(router.urls)),
 ]

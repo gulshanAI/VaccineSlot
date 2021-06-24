@@ -15,6 +15,20 @@ def vaccineApi(request):
     return HttpResponse("No Registeration")
 
 
+from fcm_django.models import FCMDevice
+def noti(request):
+    device = FCMDevice.objects.all()
+    msg = "Hello {name}, according to your need we have found vaccine, Center Id {center}, Place {place}, Pincode {pincode}, Vaccine {vaccine},  ".format(name="Gulshan", center="18938938", place="Pune", pincode="411041", vaccine="COVID", )
+    sendData = {
+        "id" : 1,
+        "text" : "new Symulti update !",
+        "link" : "href://www.symulti.com"
+    }
+    device.send_message(title="Vaccine Related to you need found", body=msg, icon="https://www.touchmediaads.com/img/logo1.png", data=sendData)
+    print("sended")
+    return HttpResponse("No Registeration")
+
+
 from rest_framework.response import Response
 from .models import VaccineRegisteraton
 from .serializers import VaccineRegisteratonSerializer
