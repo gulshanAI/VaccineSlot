@@ -34,9 +34,9 @@ class VaccineRegisteraton(models.Model):
 class Notification(models.Model):
     registerUser = models.ForeignKey(VaccineRegisteraton, on_delete=models.CASCADE, null=False)
     ofDate = models.CharField(max_length=15)
-    noti = models.BooleanField(default=True)
+    centerid = models.CharField(max_length=15)
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
 
     def __str__(self):
-        return self.registerUser
+        return self.centerid
     

@@ -1,6 +1,9 @@
 import requests
 from django.utils.timezone import datetime
 from fcm_django.models import FCMDevice
+from django.core.exceptions import ObjectDoesNotExist
+from .models import Notification
+from django.db.models import Q
 
 class Vaccine:
     def __init__(self, today, regUser):
@@ -28,8 +31,21 @@ class Vaccine:
         token = regUser.token
         device = FCMDevice.objects.filter(registration_id=token)
         for vac in found:
-            msg = "Hello {name}, according to your need we have found vaccine, Center Id {center}, Place {place}, Pincode {pincode}, Vaccine {vaccine},  ".format(name=regUser.name, center=vac["center"], place=vac["place"], pincode=vac["pincode"], vaccine=vac["vaccine"], )
-            device.send_message(title="Vaccine Related to you need found", body=msg, icon="https://touchmediaads.com/img/logo1.png")
+            centerid = vac["center"]
+            obj, created = Notification.objects.get_or_create(
+                registerUser=regUser,
+                ofDate=self.TODAY,
+                centerid=centerid,
+                defaults={
+                    'registerUser': regUser,
+                    'ofDate': self.TODAY,
+                    'centerid': centerid,
+                },
+            )
+            if created:
+                msg = "Hello {name}, according to your need we have found vaccine, Center Id {center}, Place {place}, Pincode {pincode}, Vaccine {vaccine},  ".format(name=regUser.name, center=centerid, place=vac["place"], pincode=vac["pincode"], vaccine=vac["vaccine"], )
+                device.send_message(title="Vaccine Related to you need found", body=msg, icon="https://touchmediaads.com/img/logo1.png")
+                print("sended")
         print("Vaccine Found")
         print(found)
     
