@@ -26,7 +26,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 FCM_DJANGO_SETTINGS = {
     "FCM_SERVER_KEY": "AAAA9f13vs8:APA91bEM7W7z8roCxYUizgKQZDhHx05umspYoQvmN_AcTVP8C2i4NB8TFkKFijGXFm7lxArzQ3zaXI48uLc1T6YhNM9QGuJkBAzhpkEfpwPuC3c1rKmOGmML9Kn3bygO2UhFNnFB_rhf"
@@ -49,6 +49,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -133,3 +134,4 @@ FCM_DJANGO_SETTINGS = {
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'static'
