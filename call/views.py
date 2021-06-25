@@ -8,10 +8,18 @@ def vaccineApi(request):
     regUser = VaccineRegisteraton.objects.all()
     if regUser:
         today = datetime.today().strftime('%d-%m-%Y')
+        data = []
         for reg in regUser:
             vac = Vaccine(today, reg)
-            vac.getVaccineDetail()
-            return HttpResponse("finding.. for "+str(today))
+            found = vac.getVaccineDetail()
+            result = {
+                'name' : reg.name,
+                'today' : today,
+                'found' : found,
+            }
+            data.append(result)
+        return render(request,'showDetail.html', context={'data' : data})
+            # return HttpResponse("finding.. for "+str(today))
     return HttpResponse("No Registeration")
 
 
