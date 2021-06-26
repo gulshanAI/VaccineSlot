@@ -40,10 +40,10 @@ class Vaccine:
                     'centerid': centerid,
                 },
             )
-            # if created:
-            #     msg = "Hello {name}, according to your need we have found vaccine, Center Id {center}, Place {place}, Pincode {pincode}, Vaccine {vaccine},  ".format(name=regUser.name, center=centerid, place=vac["place"], pincode=vac["pincode"], vaccine=vac["vaccine"], )
-            #     device.send_message(title="Vaccine Related to you need found", body=msg, icon="https://www.touchmediaads.com/img/logo1.png")
-            #     print("sended")
+            if created:
+                msg = "Hello {name}, according to your need we have found vaccine, Center Id {center}, Place {place}, Pincode {pincode}, Vaccine {vaccine},  ".format(name=regUser.name, center=centerid, place=vac["place"], pincode=vac["pincode"], vaccine=vac["vaccine"], )
+                device.send_message(title="Vaccine Related to you need found", body=msg, icon="https://www.touchmediaads.com/img/logo1.png")
+                print("sended")
         print("Vaccine Found")
         print(found)
     
