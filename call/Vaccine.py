@@ -91,27 +91,47 @@ class Vaccine:
 
     def returnByUserDemand(self, data, fee):
         ageis = int(data["min_age_limit"])
-        capacity = data["available_capacity"]
         userReg = self.regUser
-        if userReg.under18 and ageis >= 18 and ageis < 45:
-            data = data
-        elif not userReg.under18 and ageis >= 45:
-            data = data
+        if userReg.under18:
+            if ageis >= 45:
+                return False
         else:
-            return False
+            if ageis >= 18 and ageis < 45:
+                return False
 
-        if userReg.doseType and data["available_capacity_dose1"]:
-            data = data
-        elif not userReg.doseType and data["available_capacity_dose2"]:
-            data = data
+        if userReg.doseType:
+            if not data["available_capacity_dose1"]:
+                return False
         else:
-            return False
+            if not data["available_capacity_dose2"]:
+                return False
 
-        if userReg.paidType and fee == "Free":
-            data = data
-        elif not userReg.paidType and fee == "Paid":
-            data = data
+        if userReg.paidType:
+            if fee != "Free":
+                return False
         else:
-            return False
-        return data
+            if fee != "Paid":
+                return False
+
+        # if userReg.under18 and ageis >= 18 and ageis < 45:
+        #     data = data
+        # elif not userReg.under18 and ageis >= 45:
+        #     data = data
+        # else:
+        #     return False
+
+        # if userReg.doseType and data["available_capacity_dose1"]:
+        #     data = data
+        # elif not userReg.doseType and data["available_capacity_dose2"]:
+        #     data = data
+        # else:
+        #     return False
+
+        # if userReg.paidType and fee == "Free":
+        #     data = data
+        # elif not userReg.paidType and fee == "Paid":
+        #     data = data
+        # else:
+        #     return False
+        # return data
 
