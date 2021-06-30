@@ -59,6 +59,7 @@ class Vaccine:
                     'fee': dt["fee_type"],
                     'vaccine': sess["vaccine"],
                 }
+
     def checkSeatFound(self, data):
         if data:
             toSend = []
@@ -68,9 +69,7 @@ class Vaccine:
                 for dt in data:
                     sessions = dt["sessions"]
                     for sess in sessions:
-                        ageis = int(sess["min_age_limit"])
                         capacity = sess["available_capacity"]
-
                         if capacity:
                             getDemandData = self.returnByUserDemand(sess, dt["fee_type"])
                             if getDemandData:
@@ -112,26 +111,4 @@ class Vaccine:
         else:
             if fee != "Paid":
                 return False
-
-        # if userReg.under18 and ageis >= 18 and ageis < 45:
-        #     data = data
-        # elif not userReg.under18 and ageis >= 45:
-        #     data = data
-        # else:
-        #     return False
-
-        # if userReg.doseType and data["available_capacity_dose1"]:
-        #     data = data
-        # elif not userReg.doseType and data["available_capacity_dose2"]:
-        #     data = data
-        # else:
-        #     return False
-
-        # if userReg.paidType and fee == "Free":
-        #     data = data
-        # elif not userReg.paidType and fee == "Paid":
-        #     data = data
-        # else:
-        #     return False
-        # return data
-
+        return data
