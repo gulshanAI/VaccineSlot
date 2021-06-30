@@ -1,7 +1,7 @@
 import requests
 from fcm_django.models import FCMDevice
 from .models import Notification
-
+from .email import SendThredEmail
 class Vaccine:
     def __init__(self, today, regUser):
         self.URL = "https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/"
@@ -41,8 +41,11 @@ class Vaccine:
                 },
             )
             if created:
-                msg = "Hello {name}, according to your need we have found vaccine, Center Id {center}, Place {place}, Pincode {pincode}, Vaccine {vaccine},  ".format(name=regUser.name, center=centerid, place=vac["place"], pincode=vac["pincode"], vaccine=vac["vaccine"], )
+                msg = "Hello {name}, according to your need we have found vaccine, Center Id {center}, Place {place}, Pincode {pincode}, Vaccine {vaccine},  Message from Touchmedia Ads".format(name=regUser.name, center=centerid, place=vac["place"], pincode=vac["pincode"], vaccine=vac["vaccine"], )
                 device.send_message(title="Vaccine Related to you need found", body=msg, icon="https://www.touchmediaads.com/img/logo1.png")
+                print(regUser.email)
+                if regUser.email:
+                    SendThredEmail(regUser.email, msg).start()
                 print("sended")
         print("Vaccine Found")
         print(found)

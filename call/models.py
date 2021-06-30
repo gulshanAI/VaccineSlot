@@ -5,8 +5,9 @@ phone_regex = RegexValidator(regex=r'^\+?1?\d{10}$', message="Phone number must 
 
 class VaccineRegisteraton(models.Model):
     name = models.CharField(max_length=250)
-    token = models.TextField()
+    token = models.TextField(null=True, blank=True)
     mobile = models.CharField(validators=[phone_regex], max_length=12, null=True, blank=True)
+    email = models.EmailField(null=True, blank=True)
     under18 = models.BooleanField(default=True) #True means Under 18
     doseType = models.BooleanField(default=True) #True means DOSE 1
     paidType = models.BooleanField(default=True) #True means Free
@@ -23,14 +24,15 @@ class VaccineRegisteraton(models.Model):
             VaccineRegisteraton.objects.filter(token=token).delete()
             FCMDevice.objects.filter(registration_id=token).delete()
         super(VaccineRegisteraton, self).save(*args, **kwargs)
-        obj, created = FCMDevice.objects.get_or_create(
-            registration_id= self.token,
-            defaults={
-                'name': self.name,
-                'registration_id': self.token,
-                'type': "web",
-            },
-        )
+        if self.token:
+            obj, created = FCMDevice.objects.get_or_create(
+                registration_id= self.token,
+                defaults={
+                    'name': self.name,
+                    'registration_id': self.token,
+                    'type': "web",
+                },
+            )
 
 class Notification(models.Model):
     registerUser = models.ForeignKey(VaccineRegisteraton, on_delete=models.CASCADE, null=False)

@@ -5,8 +5,8 @@ from .models import VaccineRegisteraton
 from django.utils.timezone import datetime
 
 def vaccineApi(request):
-    regUser = VaccineRegisteraton.objects.all()
-    # regUser = VaccineRegisteraton.objects.filter(id=3)
+    # regUser = VaccineRegisteraton.objects.all()
+    regUser = VaccineRegisteraton.objects.filter(id=3)
     if regUser:
         today = datetime.today().strftime('%d-%m-%Y')
         data = []
